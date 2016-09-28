@@ -7,17 +7,8 @@ import org.hibernate.SessionFactory;
 
 import com.dw.ssh.entities.Employee;
 
-public class EmployeeDao {
+public class EmployeeDao extends BaseDao {
 	
-	private SessionFactory sessionFactory;
-	
-	public void setSessionFactory(SessionFactory sessionFactory) {
-		this.sessionFactory = sessionFactory;
-	}
-	
-	public Session getSession() {
-		return this.sessionFactory.getCurrentSession();
-	}
 	
 	public void delete(Integer id){
 		String hql = "DELETE FROM Employee e WHERE e.id = ?";

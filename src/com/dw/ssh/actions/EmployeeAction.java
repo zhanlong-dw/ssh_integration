@@ -7,9 +7,14 @@ import java.util.Map;
 
 import org.apache.struts2.interceptor.RequestAware;
 
+import com.dw.ssh.entities.Employee;
+import com.dw.ssh.service.DepartmentService;
 import com.dw.ssh.service.EmployeeService;
 import com.opensymphony.xwork2.ActionSupport;
-public class EmployeeAction extends ActionSupport implements RequestAware{
+import com.opensymphony.xwork2.ModelDriven;
+import com.opensymphony.xwork2.Preparable;
+public class EmployeeAction extends ActionSupport implements RequestAware,
+ModelDriven<Employee>,Preparable{
 
 	/**
 	 * 
@@ -21,6 +26,12 @@ public class EmployeeAction extends ActionSupport implements RequestAware{
 	private Integer id;
 	public void setEmployeeService(EmployeeService employeeService) {
 		this.employeeService = employeeService;
+	}
+	
+	private DepartmentService departmentService;
+	
+	public void setDepartmentService(DepartmentService departmentService) {
+		this.departmentService = departmentService;
 	}
 	
 	public String list(){
@@ -41,11 +52,11 @@ public class EmployeeAction extends ActionSupport implements RequestAware{
 	public String delete(){
 		try {
 			employeeService.delete(id);
-			inputStream = inputStream = new ByteArrayInputStream("1".getBytes("UTF-8"));
+			inputStream = new ByteArrayInputStream("1".getBytes("UTF-8"));
 		} catch (Exception e) {
 			e.printStackTrace();
 			try {
-				inputStream = inputStream = new ByteArrayInputStream("0".getBytes("UTF-8"));
+				inputStream = new ByteArrayInputStream("0".getBytes("UTF-8"));
 			} catch (UnsupportedEncodingException e1) {
 				e1.printStackTrace();
 			}
@@ -54,12 +65,33 @@ public class EmployeeAction extends ActionSupport implements RequestAware{
 	}
 	
 	
+	public String input(){
+		request.put("departments",departmentService.getAll());
+		return INPUT;
+	}
 	
+	public String save(){
+		System.out.println(model);
+		return SUCCESS;
+	}
+	
+	public void prepareSave(){
+		model = new Employee();
+	}
 
 	@Override
 	public void setRequest(Map<String, Object> arg0) {
 		this.request = arg0;
-		
+	}
+
+	@Override
+	public void prepare() throws Exception {}
+
+	private Employee model;
+	
+	@Override
+	public Employee getModel() {
+		return model;
 	}
 	
 	

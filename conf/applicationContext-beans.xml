@@ -7,12 +7,21 @@
 		<property name="sessionFactory" ref="sessionFactory"></property>
 	</bean>
 	
+	<bean id="departmentDao" class="com.dw.ssh.dao.DepartmentDao">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	
 	<bean id="employeeService" class="com.dw.ssh.service.EmployeeService">
 		<property name="employeeDao" ref="employeeDao"></property>
 	</bean>
 	
+	<bean id="departmentService" class="com.dw.ssh.service.DepartmentService">
+		<property name="departmentDao" ref="departmentDao"></property>
+	</bean>
+	
 	<bean id="employeeAction" class="com.dw.ssh.actions.EmployeeAction" scope="prototype">
 		<property name="employeeService" ref="employeeService"></property>
+		<property name="departmentService" ref="departmentService"></property>
 	</bean>
 
 </beans>
