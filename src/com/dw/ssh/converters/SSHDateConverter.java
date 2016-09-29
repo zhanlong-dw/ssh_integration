@@ -1,9 +1,9 @@
 package com.dw.ssh.converters;
 
-import java.sql.Date;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Map;
 
 import org.apache.struts2.util.StrutsTypeConverter;
@@ -20,7 +20,7 @@ public class SSHDateConverter extends StrutsTypeConverter {
 	public Object convertFromString(Map context, String[] values, Class toClass) {
 		if(toClass == Date.class){
 			try {
-				dateFormat.parse(values[0]);
+				return dateFormat.parse(values[0]);
 			} catch (ParseException e) {
 				e.printStackTrace();
 			}

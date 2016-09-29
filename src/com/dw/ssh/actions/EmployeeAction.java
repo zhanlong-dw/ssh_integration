@@ -3,10 +3,9 @@ package com.dw.ssh.actions;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
+import java.util.Date;
 import java.util.Map;
-
 import org.apache.struts2.interceptor.RequestAware;
-
 import com.dw.ssh.entities.Employee;
 import com.dw.ssh.service.DepartmentService;
 import com.dw.ssh.service.EmployeeService;
@@ -61,7 +60,7 @@ ModelDriven<Employee>,Preparable{
 				e1.printStackTrace();
 			}
 		}
-		return "delete";
+		return "ajax-success";
 	}
 	
 	
@@ -70,13 +69,40 @@ ModelDriven<Employee>,Preparable{
 		return INPUT;
 	}
 	
+	public void prepareInput(){
+		if(id!=null){
+			model = employeeService.get(id);
+		}
+	}
 	public String save(){
-		System.out.println(model);
+		if(id == null){
+			model.setCreateTime(new Date());
+		}
+		employeeService.saveOrUpdate(model);
 		return SUCCESS;
 	}
 	
 	public void prepareSave(){
-		model = new Employee();
+		if(id==null){
+			model = new Employee();
+		}else{
+			model = employeeService.get(id);
+		}
+	}
+	
+	private String lastName;
+	
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+	
+	public String validateLastName() throws UnsupportedEncodingException{
+		if(employeeService.LastNameIsValid(lastName)){
+			inputStream  = new ByteArrayInputStream("1".getBytes("UTF-8"));
+		}else{
+			inputStream  = new ByteArrayInputStream("0".getBytes("UTF-8"));
+		}
+		return "ajax-success";
 	}
 
 	@Override

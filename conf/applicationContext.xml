@@ -39,7 +39,8 @@
 	<!-- 2、配置事务属性 -->
 	<tx:advice id="txAdvice" transaction-manager="transactionManager">
 		<tx:attributes>
-			<tx:method name="get" read-only="true"/>
+			<tx:method name="get*" read-only="true"/>
+			<tx:method name="lastNameIsValid" read-only="true"/>
 			<tx:method name="*"/>
 		</tx:attributes>
 	</tx:advice>

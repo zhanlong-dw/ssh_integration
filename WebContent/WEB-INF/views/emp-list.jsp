@@ -51,17 +51,24 @@
 				<td>CREATETIME</td>
 				<td>DEPT</td>
 				<td>DELETE</td>
+				<td>EDIT</td>
 			</tr>
 			<s:iterator value="#request.employees">
 				<tr>
 				<td>${id}</td>
 				<td>${lastName}</td>
 				<td>${email}</td>
-				<td>${birth}</td>
-				<td>${createTime}</td>
+				<td>
+					<s:date name="birth" format="yyyy-MM-dd"/>
+				</td>
+				<td>
+					<s:date name="birth" format="yyyy-MM-dd hh:mm:ss"/>
+				</td>
 				<td>${department.departmentName}</td>
 				<td><a href="emp-delete?id=${id}" class="delete">Delete</a>
 					<input type="hidden" value="${lastName}"/>
+				</td>
+				<td><a href="emp-input?id=${id}">Edit</a>
 				</td>
 			</tr>
 			</s:iterator>
